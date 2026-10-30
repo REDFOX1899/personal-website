@@ -3,5 +3,5 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "scripts": { "dev": "node server.mjs", "start": "node server.mjs", "build": "npm run check && node build.mjs", "check": "node --check app.js && node --check content.js && node --check server.mjs && node --check build.mjs" }
+  "scripts": { "dev": "node server.mjs", "start": "node server.mjs", "build": "npm run check && node build.mjs", "build:drop": "npm run check && node build.mjs --drop", "check": "node --check app.js && node --check content.js && node --check server.mjs && node --check build.mjs" }
 }

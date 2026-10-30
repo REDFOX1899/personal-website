@@ -31,7 +31,13 @@ npm run check
 
 ## Deploy
 
-Import `REDFOX1899/personal-website` into Vercel with the Other framework preset. `vercel.json` configures `npm run build`, the `dist/` output, and direct article links. The build copies only public website files, assets, and the reference license; local tooling and repository files are excluded. Production deployments follow the `main` branch. Domain records stay managed at IONOS; preserve the existing mail records when connecting the website.
+Live at https://www.shantanu-patil.com/ (the apex domain redirects to `www`). Vercel project: https://vercel.com/redfox1899s-projects/shantanu-personal-website. Fallback address: https://shantanu-personal-website-dun.vercel.app/.
+
+Deployment uses Vercel Drop, without GitHub integration. GitHub remains a private source backup; pushing a commit does not publish it.
+
+For future updates, run `npm run build:drop`, open https://vercel.com/drop, upload the generated `dist/` folder, and choose **Deploy to an existing project instead** → **shantanu-personal-website**. The generated configuration preserves direct article links. Do not create another project for routine updates. The build copies only public website files, assets, and the reference license; local tooling and repository files are excluded.
+
+Domain records stay managed at IONOS: `A @ 216.198.79.1` and `CNAME www 7278eeb76f2d4c9e.vercel-dns-017.com`. The prior IONOS placeholder A/AAAA records were replaced; mail records and nameservers were preserved. Vercel provisions HTTPS automatically. Recheck the targets in the Vercel Domains page before any future DNS change.
 
 ## Sources and assets
 
