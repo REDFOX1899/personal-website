@@ -19,7 +19,7 @@ Open http://localhost:4173. Stop with Ctrl+C. If the port is occupied, use `PORT
 - `styles.css`: layout and responsive styling.
 - `assets/Shantanu-Patil-CV.pdf`: downloadable CV.
 
-The introduction retains the template's 85-word budget in three paragraphs of 30, 30, and 25 words. Navigation remains five tabs. Artwork animates, while automatic page changes are disabled so readers can scan at their own pace. The learn tab retains the original `?page=reading` URL. Writing links to four published build logs on fde.guru; an “all writing” link opens the full archive. Learning links open the canonical field guides and chapters.
+The introduction retains the template's 85-word budget in three paragraphs of 30, 30, and 25 words. Navigation remains five tabs. Artwork animates, while automatic page changes are disabled so readers can scan at their own pace. The original reading tab and `?page=reading` URL contain the learning library. Header and navigation spacing follow the reference at each responsive breakpoint. Writing links to four published build logs on fde.guru; the reading page also links to the full archive. Learning links open the canonical field guides and chapters.
 
 The original local template is preserved in the first Git commit. Personalization and fde.guru links are recorded separately. The Desktop folder is the Git checkout; the Codex outputs folder is a matching deliverable copy.
 

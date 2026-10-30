@@ -9,7 +9,7 @@ const escape = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&
 const dateLabel = date => new Date(date+'T12:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
 
 function header(active, article=false) {
-  return `<header class="site-header"><${article?'p':'h1'} class="site-name"><a data-route href="/">${escape(profile.name)}</a></${article?'p':'h1'}><nav class="primary-nav" aria-label="Primary">${Object.entries(routes).map(([name,url])=>`<a data-route href="${url}" ${name===active?'aria-current="page"':''}>${name==='reading'?'learn':name}</a>`).join('')}</nav></header>`;
+  return `<header class="site-header"><${article?'p':'h1'} class="site-name"><a data-route href="/">${escape(profile.name)}</a></${article?'p':'h1'}><nav class="primary-nav" aria-label="Primary">${Object.entries(routes).map(([name,url])=>`<a data-route href="${url}" ${name===active?'aria-current="page"':''}>${name}</a>`).join('')}</nav></header>`;
 }
 function footer() {
   return `<footer class="site-footer">${Object.entries(profile.socials).map(([name,url])=>url?`<a href="${escape(url)}" target="_blank" rel="noreferrer">${name}</a>`:`<button data-action="social" data-social="${name}">${name}</button>`).join('')}<button data-action="email" aria-label="Reveal email" aria-expanded="false">email</button></footer>`;
@@ -36,7 +36,7 @@ function designCard(type) {
   return `<article class="demo-card" data-demo="${type}"><h2>${type}</h2><div class="demo">${contents[type]}</div></article>`;
 }
 function gallery() {
-  const columns = mobileQuery.matches && innerWidth<640
+  const columns = mobileQuery.matches
     ? [['Search','Business card','Wheel','Signature','Clock','Carousel','Scattered points','Contributions','Liquid toggle','Duration picker']]
     : [['Search','Business card','Wheel','Signature','Clock'],['Carousel','Scattered points','Contributions','Liquid toggle','Duration picker']];
   return `<div class="marquee" aria-label="Interactive design experiments">${columns.map(items=>`<div class="marquee-column"><div class="marquee-track">${items.map(designCard).join('')}${items.map(type=>`<div inert aria-hidden="true">${designCard(type)}</div>`).join('')}</div></div>`).join('')}</div>`;
@@ -49,21 +49,21 @@ function render({focus=false}={}) {
   if(!routes[page]) page='about';
   const post=slug?posts.find(p=>p.slug===slug):null;
   currentRoute=location.pathname+location.search;
-  document.title=post?`${post.title} · ${profile.name}`:`${page==='about'?'':(page==='reading'?'Learn':page[0].toUpperCase()+page.slice(1))+' · '}${profile.name}`;
+  document.title=post?`${post.title} · ${profile.name}`:`${page==='about'?'':(page[0].toUpperCase()+page.slice(1))+' · '}${profile.name}`;
   document.documentElement.style.background=page==='about'?'#fff':'#000';
   document.querySelector('meta[name="theme-color"]').content=page==='about'?'#fff':'#000';
   if(slug && !post) {
     app.innerHTML=`<main id="page-content" class="article-scene"><div class="article-column">${header('writing',true)}<h1>Page not found</h1><p>This page could not be found.</p><a data-route class="text-link" href="/writing">← all writing</a>${footer()}</div></main>`;
   } else if(post) {
-    app.innerHTML=`<main class="article-scene fade-in" id="page-content" tabindex="-1"><div class="article-column">${header('writing',true)}<article><div class="article-meta"><a data-route href="/writing">← writing</a><time datetime="${post.date}">${dateLabel(post.date)}</time></div><img class="article-cover" src="/assets/${post.cover}" alt="Illustrative cover photograph"><h1 class="article-title">${escape(post.title)}</h1><div class="article-body"><p>${escape(post.intro)}</p>${post.sections.map(([heading,paragraphs])=>`<h2>${escape(heading)}</h2>${paragraphs.map(p=>`<p>${escape(p)}</p>`).join('')}`).join('')}</div></article><section class="more-writing"><h2>more writing</h2>${posts.filter(p=>p!==post).map(p=>`<a data-route href="/writing/${p.slug}"><span>${escape(p.title)}</span><time>${dateLabel(p.date)}</time></a>`).join('')}<a data-route class="text-link" href="/writing">all writing</a></section>${footer()}</div></main>`;
+    app.innerHTML=`<main class="article-scene fade-in" id="page-content" tabindex="-1"><div class="article-column">${header('writing',true)}<article><div class="article-meta"><a data-route href="/writing">← writing</a><time datetime="${post.date}">${dateLabel(post.date)}</time></div><img class="article-cover" src="/assets/${post.cover}" alt="Conceptual project overview"><h1 class="article-title">${escape(post.title)}</h1><div class="article-body"><p>${escape(post.intro)}</p>${post.sections.map(([heading,paragraphs])=>`<h2>${escape(heading)}</h2>${paragraphs.map(p=>`<p>${escape(p)}</p>`).join('')}`).join('')}</div></article><section class="more-writing"><h2>more writing</h2>${posts.filter(p=>p!==post).map(p=>`<a data-route href="/writing/${p.slug}"><span>${escape(p.title)}</span><time>${dateLabel(p.date)}</time></a>`).join('')}<a data-route class="text-link" href="/writing">all writing</a></section>${footer()}</div></main>`;
   } else {
     const art=page==='design'?'':`<div class="art" aria-hidden="true"><canvas></canvas><video muted playsinline preload="auto"></video></div>`;
     let content='';
     if(page==='about') content=`${mobileQuery.matches?'':art}<div class="about-scroll"><div class="about-center"><div class="shell">${header(page)}<div class="copy">${profile.about.map(p=>`<p>${p}</p>`).join('')}</div>${footer()}</div></div></div>${mobileQuery.matches?art:''}`;
     if(page==='timeline') content=`${mobileQuery.matches?`<div class="mobile-header">${header(page)}</div>`:''}${art}<div class="timeline-scroll"><div class="timeline-center"><div class="shell">${header(page)}<div class="copy">${timeline()}</div>${footer()}</div></div></div>`;
     if(page==='reading') content=`${mobileQuery.matches?'':art}<div class="shell">${header(page)}<div class="copy"><p>${escape(profile.readingIntro)}</p><ul class="book-list">${profile.books.map(b=>`<li>${b.href?`<a href="${escape(b.href)}" target="_blank" rel="noreferrer">${escape(b.title)}</a>`:escape(b)}</li>`).join('')}</ul></div>${footer()}</div>${mobileQuery.matches?art:''}`;
-    if(page==='design') content=`<div class="shell">${header(page)}<p class="copy">${escape(profile.design)}</p>${footer()}</div>${gallery()}`;
-    if(page==='writing') content=`${art}<div class="writing-center"><div class="shell">${header(page)}${postRows()}<a class="all-writing text-link" href="https://fde.guru/posts" target="_blank" rel="noreferrer">all writing ↗</a>${footer()}</div></div><div class="ledger-preview" aria-hidden="true"></div>`;
+    if(page==='design') content=mobileQuery.matches?`<div class="shell">${header(page)}<p class="copy">${escape(profile.design)}</p>${gallery()}${footer()}</div>`:`<div class="shell">${header(page)}<p class="copy">${escape(profile.design)}</p>${footer()}</div>${gallery()}`;
+    if(page==='writing') content=`${art}<div class="writing-center"><div class="shell">${header(page)}${postRows()}${footer()}</div></div><div class="ledger-preview" aria-hidden="true"></div>`;
     app.innerHTML=`<main id="page-content" tabindex="-1" class="scene ${page} fade-in">${content}</main>`;
     if(page!=='design') cleanups.push(startArtwork(page));
     if(page==='design') {

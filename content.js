@@ -10,7 +10,7 @@ export const profile = {
     cv: '/assets/Shantanu-Patil-CV.pdf'
   },
   about: [
-    `I'm an engineer in New York, building <a href="/writing/connecting-ai-to-enterprise-data" data-route>AI integrations</a> and reliable <a href="/writing/checking-the-numbers" data-route>data systems</a>. At Virtusa, I work with Dun &amp; Bradstreet on tools that connect models to real enterprise workflows.`,
+    `I'm an engineer based in New York. At Virtusa, I build <a href="/writing/connecting-ai-to-enterprise-data" data-route>AI tools</a> and <a href="/writing/checking-the-numbers" data-route>data systems</a> for Dun &amp; Bradstreet, helping teams put models to work on real business problems.`,
     `Previously, I built cloud data pipelines for enterprise customers at E-Touch and backend services at Sariska. I studied computer science at UMass Amherst and mathematics and computing at IIT Dhanbad.`,
     `I share practical build notes at <a href="https://fde.guru/" target="_blank" rel="noreferrer">fde.guru</a>. I'm open to AI and data engineering roles, and conversations with people building thoughtful tools for real problems.`
   ],
