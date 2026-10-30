@@ -1,0 +1,38 @@
+# Shantanu Patil — personal website
+
+A minimal personal site for AI and data engineering hiring and collaboration. Local development only; no deployment is configured.
+
+## Preview
+
+Requires Node.js 18 or newer. No dependencies to install.
+
+```sh
+npm run dev
+```
+
+Open http://localhost:4173. Stop with Ctrl+C. If the port is occupied, use `PORT=4174 npm run dev`.
+
+## Edit
+
+- `content.js`: introduction, career timeline, links, learning library, and project notes.
+- `app.js`: navigation and interactions.
+- `styles.css`: layout and responsive styling.
+- `assets/Shantanu-Patil-CV.pdf`: downloadable CV.
+
+The introduction retains the template's 85-word budget in three paragraphs of 30, 30, and 25 words. Navigation remains five tabs. Artwork animates, while automatic page changes are disabled so readers can scan at their own pace. The learn tab retains the original `?page=reading` URL. Writing links to four published build logs on fde.guru; an “all writing” link opens the full archive. Learning links open the canonical field guides and chapters.
+
+The original local template is preserved in the first Git commit. Personalization and fde.guru links are recorded separately. The Desktop folder is the Git checkout; the Codex outputs folder is a matching deliverable copy.
+
+## Check
+
+```sh
+npm run check
+```
+
+## Sources and assets
+
+The design reference is https://www.connorhyatt.com/. Its public repository, https://github.com/hyattc1/connorhyatt.com, contains an older design. Its MIT notice is retained in `REFERENCE-LICENSE.txt`.
+
+The font, video artwork, card texture, and reference photos were obtained from the live reference site for this local prototype. They are separate from the older repository's source; the retained MIT notice does not establish licensing for every live asset. The SVG project covers were created for this site.
+
+Personal copy is based on the user's CVs and project records. Published work and learning resources link directly to https://fde.guru/, https://systemdesign.fde.guru/, and https://thesis.fde.guru/. Employer projects preserve the distinction between production work, prototypes, and work submitted for review. No source CVs, private project records, or credentials are included beyond the selected downloadable CV.

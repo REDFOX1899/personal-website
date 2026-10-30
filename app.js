@@ -1,4 +1,4 @@
-import { profile, posts } from './content.js';
+import { profile, posts, writingPosts } from './content.js';
 
 const app = document.querySelector('#app');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
@@ -9,7 +9,7 @@ const escape = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&
 const dateLabel = date => new Date(date+'T12:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
 
 function header(active, article=false) {
-  return `<header class="site-header"><${article?'p':'h1'} class="site-name"><a data-route href="/">${escape(profile.name)}</a></${article?'p':'h1'}><nav class="primary-nav" aria-label="Primary">${Object.entries(routes).map(([name,url])=>`<a data-route href="${url}" ${name===active?'aria-current="page"':''}>${name}</a>`).join('')}</nav></header>`;
+  return `<header class="site-header"><${article?'p':'h1'} class="site-name"><a data-route href="/">${escape(profile.name)}</a></${article?'p':'h1'}><nav class="primary-nav" aria-label="Primary">${Object.entries(routes).map(([name,url])=>`<a data-route href="${url}" ${name===active?'aria-current="page"':''}>${name==='reading'?'learn':name}</a>`).join('')}</nav></header>`;
 }
 function footer() {
   return `<footer class="site-footer">${Object.entries(profile.socials).map(([name,url])=>url?`<a href="${escape(url)}" target="_blank" rel="noreferrer">${name}</a>`:`<button data-action="social" data-social="${name}">${name}</button>`).join('')}<button data-action="email" aria-label="Reveal email" aria-expanded="false">email</button></footer>`;
@@ -17,13 +17,13 @@ function footer() {
 function timeline() {
   return `<p>${escape(profile.timelineIntro)}</p><ul class="timeline-list">${profile.timeline.map((item,i)=>`<li class="timeline-item"><button class="timeline-button" aria-expanded="false" aria-controls="chapter-${i}"><span class="timeline-label">${escape(item.label)}</span><span class="timeline-title">${escape(item.title)}</span><span class="chevron" aria-hidden="true">⌄</span></button><div id="chapter-${i}" class="timeline-details" inert><div><ul>${item.details.map(d=>`<li>${escape(d)}</li>`).join('')}</ul></div></div></li>`).join('')}</ul>`;
 }
-function postRows(list=posts) {
-  return `<ul class="post-list">${list.map(p=>`<li><a data-route data-post="${p.slug}" href="/writing/${p.slug}"><time datetime="${p.date}">${p.date}</time><span>${escape(p.title)}</span></a></li>`).join('')}</ul>`;
+function postRows(list=writingPosts) {
+  return `<ul class="post-list">${list.map(p=>`<li><a ${p.href?'target="_blank" rel="noreferrer"':'data-route'} data-post="${p.slug}" href="${p.href||'/writing/'+p.slug}"><time datetime="${p.date}">${p.date}</time><span>${escape(p.title)}</span></a></li>`).join('')}</ul>`;
 }
 function designCard(type) {
   const contents={
     Search:`<div class="demo-search"><span aria-hidden="true">⌕</span><input aria-label="Search design experiments" placeholder="Search" type="search"></div><output class="search-result" aria-live="polite"></output>`,
-    'Business card':`<div class="business-card" tabindex="0" aria-label="Sample business card"><small>◒ Studio</small><strong>${escape(profile.name)}</strong><small>Builder & curious person</small><div class="card-meta"><span>${escape(profile.email)}</span><span>your.site</span></div></div>`,
+    'Business card':`<div class="business-card" tabindex="0" aria-label="Sample business card"><small>◒ Shantanu Patil</small><strong>${escape(profile.name)}</strong><small>AI &amp; data engineering</small><div class="card-meta"><span>${escape(profile.email)}</span><span>New York</span></div></div>`,
     Wheel:`<div class="wheel" aria-label="Animated circular progress illustration"><span>75<small style="font-size:16px">%</small></span></div>`,
     Signature:`<canvas class="signature-pad" width="520" height="210" tabindex="0" aria-label="Draw your signature here"></canvas><button class="clear-signature">Clear</button>`,
     Clock:`<div class="clock" aria-label="Current time in New York"><span class="clock-time"></span><small>in New York City</small></div>`,
@@ -49,21 +49,21 @@ function render({focus=false}={}) {
   if(!routes[page]) page='about';
   const post=slug?posts.find(p=>p.slug===slug):null;
   currentRoute=location.pathname+location.search;
-  document.title=post?`${post.title} · ${profile.name}`:`${page==='about'?'':page[0].toUpperCase()+page.slice(1)+' · '}${profile.name}`;
+  document.title=post?`${post.title} · ${profile.name}`:`${page==='about'?'':(page==='reading'?'Learn':page[0].toUpperCase()+page.slice(1))+' · '}${profile.name}`;
   document.documentElement.style.background=page==='about'?'#fff':'#000';
   document.querySelector('meta[name="theme-color"]').content=page==='about'?'#fff':'#000';
   if(slug && !post) {
-    app.innerHTML=`<main id="page-content" class="article-scene"><div class="article-column">${header('writing',true)}<h1>Page not found</h1><p>This sample article hasn’t been written yet.</p><a data-route class="text-link" href="/writing">← all writing</a>${footer()}</div></main>`;
+    app.innerHTML=`<main id="page-content" class="article-scene"><div class="article-column">${header('writing',true)}<h1>Page not found</h1><p>This page could not be found.</p><a data-route class="text-link" href="/writing">← all writing</a>${footer()}</div></main>`;
   } else if(post) {
-    app.innerHTML=`<main class="article-scene fade-in" id="page-content" tabindex="-1"><div class="article-column">${header('writing',true)}<article><div class="article-meta"><a data-route href="/writing">← writing</a><time datetime="${post.date}">${dateLabel(post.date)}</time></div><img class="article-cover" src="/assets/${post.cover}" alt="Illustrative cover photograph"><h1 class="article-title">${escape(post.title)}</h1><div class="article-body"><p>${escape(post.intro)}</p>${post.sections.map(([heading,paragraphs])=>`<h2>${escape(heading)}</h2>${paragraphs.map(p=>`<p>${escape(p)}</p>`).join('')}`).join('')}</div><p class="sample-note">Sample essay for layout development. Your own writing will replace this text.</p></article><section class="more-writing"><h2>more writing</h2>${posts.filter(p=>p!==post).map(p=>`<a data-route href="/writing/${p.slug}"><span>${escape(p.title)}</span><time>${dateLabel(p.date)}</time></a>`).join('')}<a data-route class="text-link" href="/writing">all writing</a></section>${footer()}</div></main>`;
+    app.innerHTML=`<main class="article-scene fade-in" id="page-content" tabindex="-1"><div class="article-column">${header('writing',true)}<article><div class="article-meta"><a data-route href="/writing">← writing</a><time datetime="${post.date}">${dateLabel(post.date)}</time></div><img class="article-cover" src="/assets/${post.cover}" alt="Illustrative cover photograph"><h1 class="article-title">${escape(post.title)}</h1><div class="article-body"><p>${escape(post.intro)}</p>${post.sections.map(([heading,paragraphs])=>`<h2>${escape(heading)}</h2>${paragraphs.map(p=>`<p>${escape(p)}</p>`).join('')}`).join('')}</div></article><section class="more-writing"><h2>more writing</h2>${posts.filter(p=>p!==post).map(p=>`<a data-route href="/writing/${p.slug}"><span>${escape(p.title)}</span><time>${dateLabel(p.date)}</time></a>`).join('')}<a data-route class="text-link" href="/writing">all writing</a></section>${footer()}</div></main>`;
   } else {
     const art=page==='design'?'':`<div class="art" aria-hidden="true"><canvas></canvas><video muted playsinline preload="auto"></video></div>`;
     let content='';
-    if(page==='about') content=`${art}<div class="about-scroll"><div class="about-center"><div class="shell">${header(page)}<div class="copy">${profile.about.map(p=>`<p>${p}</p>`).join('')}</div>${footer()}</div></div></div>`;
+    if(page==='about') content=`${mobileQuery.matches?'':art}<div class="about-scroll"><div class="about-center"><div class="shell">${header(page)}<div class="copy">${profile.about.map(p=>`<p>${p}</p>`).join('')}</div>${footer()}</div></div></div>${mobileQuery.matches?art:''}`;
     if(page==='timeline') content=`${mobileQuery.matches?`<div class="mobile-header">${header(page)}</div>`:''}${art}<div class="timeline-scroll"><div class="timeline-center"><div class="shell">${header(page)}<div class="copy">${timeline()}</div>${footer()}</div></div></div>`;
-    if(page==='reading') content=`${mobileQuery.matches?'':art}<div class="shell">${header(page)}<div class="copy"><p>${escape(profile.readingIntro)}</p><ul class="book-list">${profile.books.map(b=>`<li>${escape(b)}</li>`).join('')}</ul></div>${footer()}</div>${mobileQuery.matches?art:''}`;
+    if(page==='reading') content=`${mobileQuery.matches?'':art}<div class="shell">${header(page)}<div class="copy"><p>${escape(profile.readingIntro)}</p><ul class="book-list">${profile.books.map(b=>`<li>${b.href?`<a href="${escape(b.href)}" target="_blank" rel="noreferrer">${escape(b.title)}</a>`:escape(b)}</li>`).join('')}</ul></div>${footer()}</div>${mobileQuery.matches?art:''}`;
     if(page==='design') content=`<div class="shell">${header(page)}<p class="copy">${escape(profile.design)}</p>${footer()}</div>${gallery()}`;
-    if(page==='writing') content=`${art}<div class="writing-center"><div class="shell">${header(page)}${postRows()}${footer()}</div></div><div class="ledger-preview" aria-hidden="true"></div>`;
+    if(page==='writing') content=`${art}<div class="writing-center"><div class="shell">${header(page)}${postRows()}<a class="all-writing text-link" href="https://fde.guru/posts" target="_blank" rel="noreferrer">all writing ↗</a>${footer()}</div></div><div class="ledger-preview" aria-hidden="true"></div>`;
     app.innerHTML=`<main id="page-content" tabindex="-1" class="scene ${page} fade-in">${content}</main>`;
     if(page!=='design') cleanups.push(startArtwork(page));
     if(page==='design') {
@@ -91,7 +91,7 @@ app.addEventListener('click',event=>{
   if(timelineButton){const open=timelineButton.getAttribute('aria-expanded')!=='true';timelineButton.setAttribute('aria-expanded',String(open));const details=document.getElementById(timelineButton.getAttribute('aria-controls'));details.classList.toggle('open',open);details.inert=!open;return;}
   const button=event.target.closest('[data-action]');
   if(button?.dataset.action==='email'){const open=button.getAttribute('aria-expanded')!=='true';button.setAttribute('aria-expanded',String(open));button.setAttribute('aria-label',open?'Hide email':'Reveal email');scramble(button,open?profile.email:'email');}
-  if(button?.dataset.action==='goal')showDialog('A life’s goal',profile.goal);
+  if(button?.dataset.action==='goal')showDialog('What I’m looking for',profile.goal);
   if(button?.dataset.action==='social')showDialog(button.dataset.social,'Your profile link goes here. Add the address in content.js when you’re ready to personalize this site.');
 });
 window.addEventListener('popstate',()=>{clearTimeout(navigationTimer);render({focus:true});});
@@ -179,6 +179,6 @@ function initializeDemos() {
 }
 function initializePostPreviews(){
   const preview=app.querySelector('.ledger-preview');
-  app.querySelectorAll('[data-post]').forEach(link=>{const post=posts.find(p=>p.slug===link.dataset.post);const show=()=>{preview.innerHTML=`<img src="/assets/${post.cover}" alt=""><p>${escape(post.description)}</p>`;preview.classList.add('visible');};const hide=()=>preview.classList.remove('visible');link.addEventListener('mouseenter',show);link.addEventListener('focus',show);link.addEventListener('mouseleave',hide);link.addEventListener('blur',hide);});
+  app.querySelectorAll('[data-post]').forEach(link=>{const post=writingPosts.find(p=>p.slug===link.dataset.post);const show=()=>{preview.innerHTML=`<img src="/assets/${post.cover}" alt=""><p>${escape(post.description)}</p>`;preview.classList.add('visible');};const hide=()=>preview.classList.remove('visible');link.addEventListener('mouseenter',show);link.addEventListener('focus',show);link.addEventListener('mouseleave',hide);link.addEventListener('blur',hide);});
 }
 render();
