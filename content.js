@@ -1,5 +1,5 @@
 // Public-facing copy grounded in the user's CVs and project records.
-// Keep the introduction at the template's 30 / 30 / 25 word budget.
+// The user approved a modestly expanded introduction, keeping three short paragraphs.
 export const profile = {
   name: 'Shantanu Patil',
   email: 'shantanupatil1899@gmail.com',
@@ -10,18 +10,27 @@ export const profile = {
     cv: '/assets/Shantanu-Patil-CV.pdf'
   },
   about: [
-    `I'm an engineer based in New York. At Virtusa, I build <a href="/writing/connecting-ai-to-enterprise-data" data-route>AI tools</a> and <a href="/writing/checking-the-numbers" data-route>data systems</a> for Dun &amp; Bradstreet, helping teams put models to work on real business problems.`,
-    `Previously, I built cloud data pipelines for enterprise customers at E-Touch and backend services at Sariska. I studied computer science at UMass Amherst and mathematics and computing at IIT Dhanbad.`,
-    `I share practical build notes at <a href="https://fde.guru/" target="_blank" rel="noreferrer">fde.guru</a>. I'm open to AI and data engineering roles, and conversations with people building thoughtful tools for real problems.`
+    `I'm an engineer based in New York. At Virtusa, I build <a href="/writing/connecting-ai-to-enterprise-data" data-route>AI tools</a> and <a href="/writing/checking-the-numbers" data-route>data systems</a> for Dun &amp; Bradstreet’s data supply chain, using AI to understand legacy systems and help move them off the mainframe.`,
+    `My work includes the <a href="https://www.dnb.com/en-us/solutions/artificial-intelligence/connectors.html" target="_blank" rel="noreferrer">Finance Analytics MCP server</a> and Trade ETL across the U.S. and Canada. At E-Touch, I started with Power BI dashboards for senior leadership, then moved into cloud migrations, Terraform, and Harness deployments.`,
+    `I studied computer science at <a class="education-link" href="https://www.umass.edu/" target="_blank" rel="noreferrer"><img class="school-mark" src="/assets/umass-amherst.png" alt="" aria-hidden="true" width="18" height="18">UMass Amherst</a> and completed an integrated B.Tech. + M.Tech. in Mathematics and Computing at <a class="education-link" href="https://www.iitism.ac.in/" target="_blank" rel="noreferrer"><img class="school-mark" src="/assets/iit-dhanbad.png" alt="" aria-hidden="true" width="18" height="18">IIT Dhanbad</a>. I write at <a href="https://fde.guru/" target="_blank" rel="noreferrer">fde.guru</a> and am open to AI and data engineering roles.`
   ],
   goal: 'I’m looking for AI and data engineering work where I can build useful systems, learn from thoughtful people, and take responsibility for what actually ships.',
   timelineIntro: 'A few chapters in my work, education, and ongoing projects:',
   timeline: [
-    { label: '2026–now', title: 'AI and data at Virtusa.', details: ['Building enterprise AI integrations and data systems for Dun & Bradstreet.', 'Production MCP, agent prototypes, and Scala/Spark pipelines.'] },
-    { label: '2024–25', title: 'Cloud pipelines at E-Touch.', details: ['Built Oracle-to-BigQuery migration pipelines using Dataflow, Apache Beam, and PySpark.', 'Provisioned GCP infrastructure and automated Kubernetes releases.', 'Also worked on Gemini-based analytics and Python models.'] },
-    { label: '2022–24', title: 'Master’s at UMass Amherst.', details: ['Studied computer and information sciences at the University of Massachusetts Amherst.'] },
+    { label: '2026–now', title: 'AI and data at Virtusa.', details: [
+      'Building D&B’s data supply chain with Scala, Java, and MongoDB.',
+      'Mapping U.S. and Canadian Trade ETL and helping migrate UCC, SLJ, and bankruptcy workflows off the mainframe.',
+      'Built the Finance Analytics MCP server for Dun & Bradstreet.',
+      'Built a D&B insurance underwriting agent with Google ADK on GCP; our team placed second in Google’s Rapid Agent Development Challenge.'
+    ] },
+    { label: '2024–25', title: 'Analytics and cloud at E-Touch.', details: [
+      'Started with Power BI dashboards for senior VPs, tracking Finance Analytics users and platform metrics worldwide.',
+      'Helped migrate Oracle Exadata workloads to AlloyDB and BigQuery on GCP.',
+      'Managed infrastructure with Terraform and CI/CD deployments through Harness.'
+    ] },
+    { label: '2022–24', title: 'Master’s at UMass Amherst.', logo: '/assets/umass-amherst.png', details: ['Studied computer and information sciences at the University of Massachusetts Amherst.'] },
     { label: '2020–21', title: 'Backend systems at Sariska.', details: ['Built Python services with Redis caching for real-time communications.', 'Managed AWS infrastructure and automated deployments.'] },
-    { label: '2015–20', title: 'Mathematics, computing, IIT Dhanbad.', details: ['Completed an integrated M.Tech. in Mathematics and Computing.'] },
+    { label: '2015–20', title: 'Integrated degree at IIT Dhanbad.', logo: '/assets/iit-dhanbad.png', details: ['Completed an integrated B.Tech. + M.Tech. in Mathematics and Computing.'] },
     { label: 'Alongside', title: 'Building and writing at fde.guru.', details: ['Publishing build logs, system design guides, and experiments in AI and data engineering.'] },
     { label: 'Next', title: 'More useful things to build.', details: ['Looking for AI and data engineering roles, and thoughtful collaborators.'] }
   ],
@@ -35,7 +44,7 @@ export const profile = {
     { title: 'Chat systems — delivery and persistence', href: 'https://systemdesign.fde.guru/chapters/12' },
     { title: 'Build notes — experiments at fde.guru', href: 'https://fde.guru/posts' }
   ],
-  design: 'Small interface studies in motion and interaction, adapted from Connor Hyatt’s site. My engineering work focuses on making complicated systems easier to understand, use, and trust in everyday work.'
+  design: 'I like tools that make complex work feel simple. These small studies explore interaction and motion: the details that make software clearer, more useful, and easier to trust.'
 };
 
 // Technical notes describe documented work. The date is the preparation date

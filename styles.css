@@ -62,3 +62,8 @@
 .all-writing{display:inline-block;margin-top:20px;font-size:14px;color:#999}
 /* Maintain contrast over animated artwork. */
 .writing .art:after{background:linear-gradient(90deg,#000a,#000c 30%,#000c 70%,#000a)}
+
+/* Small education marks follow the reference's inline-logo treatment. */
+.school-mark{display:inline-block;width:18px;height:18px;object-fit:contain;vertical-align:-3px;margin-right:4px}
+.education-link{white-space:nowrap}
+@media(max-width:639px){.school-mark{width:16px;height:16px}}
