@@ -1,6 +1,6 @@
 # Shantanu Patil — personal website
 
-A minimal personal site for AI and data engineering hiring and collaboration. Local development only; no deployment is configured.
+A minimal personal site for AI and data engineering hiring and collaboration. Configured for static deployment on Vercel at https://shantanu-patil.com.
 
 ## Preview
 
@@ -28,6 +28,10 @@ The original local template is preserved in the first Git commit. Personalizatio
 ```sh
 npm run check
 ```
+
+## Deploy
+
+Import `REDFOX1899/personal-website` into Vercel with the Other framework preset. `vercel.json` configures `npm run build`, the `dist/` output, and direct article links. The build copies only public website files, assets, and the reference license; local tooling and repository files are excluded. Production deployments follow the `main` branch. Domain records stay managed at IONOS; preserve the existing mail records when connecting the website.
 
 ## Sources and assets
 
