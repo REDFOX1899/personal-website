@@ -19,7 +19,7 @@ Open http://localhost:4173. Stop with Ctrl+C. If the port is occupied, use `PORT
 - `styles.css`: layout and responsive styling.
 - `assets/Shantanu-Patil-CV.pdf`: downloadable CV.
 
-The introduction has 106 words in three short paragraphs, expanded at the user’s request to reflect the current role and education. Navigation remains five tabs. Artwork animates, while automatic page changes are disabled so readers can scan at their own pace. The original reading tab and `?page=reading` URL contain the learning library. Header and navigation spacing follow the reference at each responsive breakpoint. Writing links to four published build logs on fde.guru; the reading page also links to the full archive. Learning links open the canonical field guides and chapters.
+The introduction stays in three short paragraphs, with a compact Yes No Tape project link added at the user’s request. Navigation remains five tabs. Artwork animates, while automatic page changes are disabled so readers can scan at their own pace. The original reading tab and `?page=reading` URL contain the learning library. Header and navigation spacing follow the reference at each responsive breakpoint. Writing links to four published build logs on fde.guru; the reading page also links to the full archive. Learning links open the canonical field guides and chapters.
 
 The original local template is preserved in the first Git commit. Personalization and fde.guru links are recorded separately. The Desktop folder is the Git checkout; the Codex outputs folder is a matching deliverable copy.
 
